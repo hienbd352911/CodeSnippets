@@ -22,7 +22,7 @@ extension &lt;#type#&gt;: &lt;#delegate#&gt; {
 	<key>IDECodeSnippetSummary</key>
 	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>hienbd's code snippets</string>
+	<string>hienbd-extension</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

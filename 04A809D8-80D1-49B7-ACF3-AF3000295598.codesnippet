@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>hienbd-uilabel-Set line spacing  with multiple text attributes</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>TopLevel</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>struct TextAttribute {
+    let text: String
+    let attribute: [NSAttributedString.Key: Any]
+}
+
+extension UILabel {
+    /// Set line spacing  with multiple text attributes
+    /// - Parameters:
+    ///   - textAttributes: array of TextAttribute object, include text (String) and attribute ([NSAttributedString.Key: Any])
+    ///   - lineSpacing: The distance in points between the bottom of one line fragment and the top of the next.
+    func addAttribute(_ textAttributes: [TextAttribute], lineSpacing: CGFloat = 0, alignment: NSTextAlignment = .left) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+        paragraphStyle.alignment = alignment
+        
+        let textJoined = textAttributes.map { $0.text }.joined(separator: "")
+        let attributedString = NSMutableAttributedString(string: textJoined)
+        
+        textAttributes.forEach {
+            let range = attributedString.mutableString.range(of: $0.text)
+            var attribute = $0.attribute
+            attribute[.paragraphStyle] = paragraphStyle
+            attributedString.addAttributes(attribute, range: range)
+        }
+        
+        attributedText = attributedString
+    }
+}
+
+// Sample
+&lt;#UILabel#&gt;.addAttribute([
+    TextAttribute(text: &lt;#String#&gt;, attribute: [.font: &lt;#UIFont#&gt;, .foregroundColor: &lt;#UIColor#&gt;]),
+    TextAttribute(text: &lt;#String#&gt;, attribute: [.font: &lt;#UIFont#&gt;, .foregroundColor: &lt;#UIColor#&gt;]),
+    TextAttribute(text: &lt;#String#&gt;, attribute: [.font: &lt;#UIFont#&gt;, .foregroundColor: &lt;#UIColor#&gt;])
+], lineSpacing: 2, alignment: .center)</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>04A809D8-80D1-49B7-ACF3-AF3000295598</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetSummary</key>
+	<string></string>
+	<key>IDECodeSnippetTitle</key>
+	<string>hienbd-uilabel-Set line spacing  with multiple text attributes</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

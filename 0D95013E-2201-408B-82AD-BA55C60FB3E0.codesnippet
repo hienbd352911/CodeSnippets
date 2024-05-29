@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>hienbd-uicollectionview-datasource</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>TopLevel</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>// MARK: - UICollectionViewDataSource
+extension FilterViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -&gt; Int {
+        return &lt;#count#&gt;
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -&gt; UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(&lt;#UICollectionViewCell#&gt;.self, for: indexPath)
+        &lt;#confgure cell here#&gt;
+        return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension FilterViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView, 
+        layout collectionViewLayout: UICollectionViewLayout, 
+        sizeForItemAt indexPath: IndexPath
+    ) -&gt; CGSize {
+        return &lt;#size of item#&gt; 
+    }
+    
+    // For a vertically scrolling grid, this value represents the minimum spacing between successive rows. For a horizontally scrolling grid, this value represents the minimum spacing between successive columns.
+    func collectionView(
+        _ collectionView: UICollectionView, 
+        layout collectionViewLayout: UICollectionViewLayout, 
+        minimumLineSpacingForSectionAt section: Int
+    ) -&gt; CGFloat {
+        return &lt;#minimumLineSpacingForSection#&gt;
+    }
+
+    // For a vertically scrolling grid, this value represents the minimum spacing between items in the same row. For a horizontally scrolling grid, this value represents the minimum spacing between items in the same column.
+    func collectionView(
+        _ collectionView: UICollectionView, 
+        layout collectionViewLayout: UICollectionViewLayout, 
+        minimumInteritemSpacingForSectionAt section: Int
+    ) -&gt; CGFloat {
+        return &lt;#minimumInteritemSpacingForSectionAt#&gt;
+    }
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>0D95013E-2201-408B-82AD-BA55C60FB3E0</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetSummary</key>
+	<string></string>
+	<key>IDECodeSnippetTitle</key>
+	<string>hienbd-uicollectionview-datasource</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

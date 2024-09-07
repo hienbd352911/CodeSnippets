@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>hienbd-swiftui-integrate-uikit</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>TopLevel</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>/// Theo chiều SwiftUI open UIKIt
+struct &lt;#UIKit#&gt;Wrapper: &lt;#UIKitRepresentable#&gt; {
+    /// Pass data from SwiftUI to UIKit
+    var &lt;#name#&gt;: &lt;#type#&gt;
+    
+    /// Chỉ gọi 1 lần
+    /// Tại func này, viewDidLoad chưa được gọi =&gt; outlets chưa được khởi tạo, nên cần tạo thêm biến local để update cho outlets tại viewDidLoad
+    func makeUIViewController(context: Context) -&gt; ViewController {
+        let vc = ViewController(completion: test)
+        vc.text = text
+        return vc
+    }
+
+    /// Được gọi nhiều lần, mỗi lần khi bên SwiftUI recomputed, thường dùng với UIView vì 1 màn thì có nhiều UIView, có thể có cả SwiftUI + UIKit trong 1 màn, còn với UIVIewController thì đã là 1 màn độc lập rồi
+    /// Tại func này, viewDidLoad đã được gọi =&gt; outlets đã được khởi tạo, có thể update value qua biến local + didSet để update cho outlets
+    func updateUIViewController(_ uiViewController: ViewController, context: Context) {
+        uiViewController.text = text
+    }
+    
+    /// Pass data from UIKit to SwiftUI
+    @Binding var &lt;#name#&gt;: &lt;#type#&gt;
+    
+    func test(_ text: String) {
+        textOfTextField = text
+    }
+    
+    class Coordinator: NSObject {
+        var parent: &lt;#UIKitWrapper#&gt;
+
+        init(_ parent: &lt;#UIKitWrapper#&gt;) {
+            self.parent = parent
+        }
+    }
+    
+    func makeCoordinator() -&gt; Coordinator {
+        Coordinator(self)
+    }
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>EE48E28F-B738-44E8-A2F8-71CE9610534D</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetSummary</key>
+	<string></string>
+	<key>IDECodeSnippetTitle</key>
+	<string>hienbd-swiftui-integrate-uikit</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

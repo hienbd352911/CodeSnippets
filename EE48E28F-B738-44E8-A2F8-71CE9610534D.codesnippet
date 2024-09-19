@@ -60,6 +60,6 @@ struct &lt;#UIKit#&gt;Wrapper: &lt;#UIKitRepresentable#&gt; {
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
-	<integer>0</integer>
+	<integer>2</integer>
 </dict>
 </plist>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>hienbd-swiftui-pass-data-from-uikit-to-swiftui-use-closure</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>TopLevel</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>import SwiftUI
+
+struct ContentView: View {
+  @State private var showingB = false
+  
+  var body: some View {
+    VStack {
+      Text("Hello, world!")
+      Button("Open screen B") {
+        showingB = true
+      }
+      .sheet(isPresented: $showingB) {
+        ViewControllerRepresentable(showing: $showingB)
+      }
+    }
+    .padding()
+  }
+}
+
+#Preview {
+  ContentView()
+}
+
+struct ViewControllerRepresentable: UIViewControllerRepresentable {
+  @Binding var showing: Bool
+  
+  func makeUIViewController(context: Context) -&gt; ViewController {
+    let vc = ViewController()
+    vc.view.backgroundColor = .red
+    vc.onBack = {
+      showing = false
+    }
+    return vc
+  }
+  
+  func updateUIViewController(_ uiViewController: ViewController, context: Context) {
+    
+  }
+}
+
+class ViewController: UIViewController {
+  var onBack: (() -&gt; ())?
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+      self?.onBack?()
+    }
+  }
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>EBC4EDFD-E9F3-41CC-9A9B-36124E1ACDC8</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetSummary</key>
+	<string></string>
+	<key>IDECodeSnippetTitle</key>
+	<string>hienbd-swiftui-pass-data-from-uikit-to-swiftui-use-closure</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>hienbd-swiftui-pass-data-from-uikit-to-swiftui-use-coordinator</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>TopLevel</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>import SwiftUI
+import PhotosUI
+
+struct ContentView: View {
+  @State private var showingImagePicker = false
+  @State private var inputImage: UIImage?
+  @State private var image: Image?
+  
+  var body: some View {
+    VStack {
+      image?
+        .resizable()
+        .scaledToFit()
+      Button("Select Image") {
+        showingImagePicker = true
+      }
+      .sheet(isPresented: $showingImagePicker) {
+        ImagePicker(image: $inputImage)
+      }
+      .onChange(of: inputImage) { _, _ in
+        loadImage()
+      }
+    }
+  }
+  
+  func loadImage() {
+    guard let inputImage = inputImage else { return }
+    image = Image(uiImage: inputImage)
+  }
+}
+
+struct ImagePicker: UIViewControllerRepresentable {
+  func makeUIViewController(context: Context) -&gt; PHPickerViewController {
+    var configuration = PHPickerConfiguration()
+    configuration.filter = .images
+    let picker = PHPickerViewController(configuration: configuration)
+    picker.delegate = context.coordinator
+    return picker
+  }
+  
+  func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {
+    
+  }
+  
+  /// Pass data from UIKit to SwiftUI
+  @Binding var image: UIImage?
+  
+  class Coordinator: NSObject, PHPickerViewControllerDelegate {
+    let parent: ImagePicker
+    
+    init(parent: ImagePicker) {
+      self.parent = parent
+    }
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+      picker.dismiss(animated: true)
+      guard let provider = results.first?.itemProvider else { return }
+      guard provider.canLoadObject(ofClass: UIImage.self) else { return }
+      provider.loadObject(ofClass: UIImage.self) { [weak self] image, _ in
+        self?.parent.image = image as? UIImage
+      }
+    }
+  }
+  
+  func makeCoordinator() -&gt; Coordinator {
+    Coordinator(parent: self)
+  }
+}
+
+#Preview {
+  ContentView()
+}
+
+/**
+ 1. Coordinator là gì, nó tương tự như khái niệm delegate trong UIKit, tức là nó sẽ được ủy quyền làm một tác vụ gì đó, cụ thể ở đây là nó sẽ là lớp trung gian lắng nghe sự kiện từ UIKit (UIViewController/UIKit) rồi đưa thông tin cho SwiftUI
+ 2. Cách triển khai: tạo 1 class Coordinator bên trong struct conform UIViewControllerRepresentable/UIViewRepresentable (gọi ngắn gọn là SwiftUIWrapper), (Coordinator sẽ chứa SwiftUIWrapper để sau còn truy xuất mà update cho SwiftUIWrapper) rồi ở func makeUIViewController/UIView để khởi tạo UIKit, thì gán delegate của bên UIKit cho Coordinator, lúc này compiler sẽ báo lỗi, và Coordinator sẽ phải conform delegate đó. Khi delegate bên UIKit bắn ra, thì Coordinator sẽ truy xuất đến biến SwiftUIWrapper và update cho bên SwiftUI thông qua 1 biến @Binding (sẽ tạo biến này ở trong SwiftUIWrapper)
+ 3. Khi nào thì sử dụng và tại sao lại cần sử dụng?
+ - Nhìn ở trên thì flow là UIKit -&gt; Coordinator (lắng nghe delegate từ UIKit) -&gt; SwiftUIWrapper, tại sao ko bỏ class Coordinator đi mà UIKit -&gt; SwiftUI luôn? =&gt; Nếu bỏ class Coordinator đi thì SwiftUIWrapper sẽ phải conform trực tiếp delegate từ UIKit, nhưng nếu delegate là dạng AnyObject, tức là muốn conform thì phải kế thừa NSObject, mà SwiftUIWrapper là kiểu struct, ko thể kế thừa NSObject, nên phải sinh ra 1 lớp trung gian là Coordinator để trung chuyển dữ liệu
+ - Sử dụng khi phía UIKit đang nhả ra delegate với dạng AnyObject (yêu cầu phải subclass NSObject), ví dụ với các components mặc định của Apple mà mình ko tạo class UIKit mới: UIImagePickerController, UISlider.valueChange, ...
+ 4. Nhược điểm
+ - phức tạp hơn so với dùng closure, vì sử dụng closure thì ko cần tạo Coordinator nữa (SwiftUIWrapper sẽ lắng nghe trực tiếp sự thay đổi từ UIKit thông qua closure), tuy nhiên với các components mặc định của Apple đã đóng gói rồi (ví dụ UIImagePickerController,..) thì ko nhả ra closure, chỉ có delegate =&gt; bắt buộc phải dùng Coordinator
+ https://www.hackingwithswift.com/books/ios-swiftui/using-coordinators-to-manage-swiftui-view-controllers
+ */</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>632B12CA-FB79-4A59-852E-9F0CCD400F29</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetSummary</key>
+	<string></string>
+	<key>IDECodeSnippetTitle</key>
+	<string>hienbd-swiftui-pass-data-from-uikit-to-swiftui-use-coordinator</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

@@ -9,9 +9,9 @@
 		<string>CodeBlock</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>        if case .&lt;#case#&gt; = &lt;#type#&gt; {
-            &lt;#code#&gt;
-        }</string>
+	<string>if case .&lt;#case#&gt; = &lt;#type#&gt; {
+    &lt;#code#&gt;
+}</string>
 	<key>IDECodeSnippetIdentifier</key>
 	<string>5AF6FFCE-ED41-4450-87CD-B0F32B6C3D13</string>
 	<key>IDECodeSnippetLanguage</key>

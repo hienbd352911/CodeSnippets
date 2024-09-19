@@ -10,7 +10,7 @@
 	</array>
 	<key>IDECodeSnippetContents</key>
 	<string>// MARK: - UICollectionViewDataSource
-extension FilterViewController: UICollectionViewDataSource {
+extension &lt;#ViewController#&gt;: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -&gt; Int {
         return &lt;#count#&gt;
     }
@@ -23,7 +23,7 @@ extension FilterViewController: UICollectionViewDataSource {
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
-extension FilterViewController: UICollectionViewDelegateFlowLayout {
+extension &lt;#ViewController#&gt;: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView, 
         layout collectionViewLayout: UICollectionViewLayout, 
@@ -63,6 +63,6 @@ extension FilterViewController: UICollectionViewDelegateFlowLayout {
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
-	<integer>0</integer>
+	<integer>2</integer>
 </dict>
 </plist>

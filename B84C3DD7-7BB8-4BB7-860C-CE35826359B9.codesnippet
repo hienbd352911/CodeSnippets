@@ -3,17 +3,25 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>hienbd-action</string>
+	<string>hienbd-uiview-extensions</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
-		<string>ClassImplementation</string>
+		<string>TopLevel</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>@IBAction func &lt;#name#&gt;(_ sender: UI&lt;#type#&gt;) {
-    &lt;#code#&gt;
+	<string>extension UIView {
+    func roundCorners(_ radius: CGFloat) {
+        layer.masksToBounds = true
+        layer.cornerRadius = radius
+    }
+    
+    func roundCornersMask(_ cornerMask: CACornerMask, radius: CGFloat) {
+        roundCorners(radius)
+        layer.maskedCorners = cornerMask
+    }
 }</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>DEE62D0B-6028-444C-9DBA-1BEFA96C438C</string>
+	<string>B84C3DD7-7BB8-4BB7-860C-CE35826359B9</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetPlatformFamily</key>
@@ -21,7 +29,7 @@
 	<key>IDECodeSnippetSummary</key>
 	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>hienbd-action</string>
+	<string>hienbd-uiview-extensions</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

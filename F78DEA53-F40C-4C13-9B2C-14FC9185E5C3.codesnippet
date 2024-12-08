@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>hienbd-combine-action</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>import Combine
+
+/// Represents a value that accepts a workFactory which takes some Input as its input and produces a Publisher&lt;Element, Error&gt; as its output.
+class Action&lt;Input, Output&gt; {
+  typealias WorkFactory = (Input) -&gt; AnyPublisher&lt;Output, Error&gt;
+  
+  // MARK: - Private properties
+  private let inputSubject = PassthroughSubject&lt;Input, Never&gt;()
+  private let outputSubject = PassthroughSubject&lt;Output, Never&gt;()
+  private let executingSubject = CurrentValueSubject&lt;Bool, Never&gt;(false)
+  private let errorSubject = PassthroughSubject&lt;Error, Never&gt;()
+  private var cancellables = Set&lt;AnyCancellable&gt;()
+  /// Work factory to generate publishers
+  private let workFactory: WorkFactory
+  
+  // MARK: - Public properties
+  /// Publisher emitting output produced by the workFactory
+  var output: AnyPublisher&lt;Output, Never&gt; {
+    outputSubject.eraseToAnyPublisher()
+  }
+  
+  /// Publisher emitting whether the action is executing
+  var isExecuting: AnyPublisher&lt;Bool, Never&gt; {
+    executingSubject.eraseToAnyPublisher()
+  }
+  
+  /// Publisher emitting error encountered during execution
+  var error: AnyPublisher&lt;Error, Never&gt; {
+    errorSubject.eraseToAnyPublisher()
+  }
+  
+  // MARK: - Initialization
+  init(workFactory: @escaping WorkFactory) {
+    self.workFactory = workFactory
+    
+    inputSubject
+      .handleEvents(receiveOutput: { [weak self] _ in
+        self?.executingSubject.send(true)
+      })
+      .flatMap(workFactory)
+      .handleEvents(receiveCompletion: { [weak self] in
+        if case .failure(let error) = $0 {
+          self?.errorSubject.send(error)
+        }
+        self?.executingSubject.send(false)
+      })
+      .catch { _ in Empty() }
+      .sink(receiveValue: { [weak self] in
+        self?.outputSubject.send($0)
+      })
+      .store(in: &amp;cancellables)
+  }
+  
+  // MARk: Public funcs
+  /// Trigger the action with the given input
+  func execute(_ input: Input) {
+    inputSubject.send(input)
+  }
+}
+</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>F78DEA53-F40C-4C13-9B2C-14FC9185E5C3</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetSummary</key>
+	<string></string>
+	<key>IDECodeSnippetTitle</key>
+	<string>hienbd-combine-action</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>
